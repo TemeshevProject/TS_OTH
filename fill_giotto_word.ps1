@@ -33,6 +33,8 @@ $word.Visible = $false
 $doc = $word.Documents.Open($output)
 $t = $doc.Tables.Item(1)
 
+$block4Row = Find-TableRow -Table $t -MatchText 'Требования условиям эксплуатации'
+
 Set-Block1Cell -Table $t -WordApp $word -Block1 $block1
 $block2Text = if ($env:GIOTTO_BLOCK2_FILE -and (Test-Path -LiteralPath $env:GIOTTO_BLOCK2_FILE)) {
     (Get-Content -LiteralPath $env:GIOTTO_BLOCK2_FILE -Raw -Encoding UTF8).Trim()
@@ -40,37 +42,12 @@ $block2Text = if ($env:GIOTTO_BLOCK2_FILE -and (Test-Path -LiteralPath $env:GIOT
     $main.purpose
 }
 Set-Block2Cell -Table $t -Purpose $block2Text
-$t.Cell(27, 3).Range.Text = $section4
-$t.Cell(27, 3).Range.HighlightColorIndex = 0
+Set-Block4Cell -Table $t -Text $section4 | Out-Null
 
-for ($r = 23; $r -ge 13; $r--) {
-    $t.Cell($r, 4).Select() | Out-Null
-    $word.Selection.Rows.Delete() | Out-Null
-}
-
-if ($components.Count -lt 5) {
-    for ($r = 12; $r -gt (7 + $components.Count); $r--) {
-        $t.Cell($r, 4).Select() | Out-Null
-        $word.Selection.Rows.Delete() | Out-Null
-    }
-}
-
-$extraRows = $components.Count - 5
-for ($i = 0; $i -lt $extraRows; $i++) {
-    $t.Cell(12, 4).Select() | Out-Null
-    $word.Selection.InsertRowsBelow() | Out-Null
-}
-
-for ($i = 0; $i -lt $components.Count; $i++) {
-    $row = 8 + $i
-    $c = $components[$i]
-    $t.Cell($row, 3).Range.Text = [string]$c.Num
-    $t.Cell($row, 4).Range.Text = $c.Name
-    $t.Cell($row, 5).Range.Text = $c.Spec.Trim()
-    $qty = Get-RequiredQuantity -Name $c.Name -Spec $c.Spec
-    $t.Cell($row, 6).Range.Text = $qty
-    $t.Cell($row, 6).Range.HighlightColorIndex = 0
-}
+Remove-ExtraComponentTemplateRows -Table $t -WordApp $word -Block4Row $block4Row
+Remove-UnusedComponentRows -Table $t -WordApp $word -ComponentCount $components.Count
+Add-ExtraComponentRows -Table $t -WordApp $word -ComponentCount $components.Count
+Fill-ComponentRows -Table $t -Components $components
 
 Clear-DocumentHighlight -Doc $doc
 $doc.Save()

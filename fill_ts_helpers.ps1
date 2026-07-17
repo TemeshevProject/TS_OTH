@@ -98,3 +98,65 @@ function New-Block1FromMainJson {
         ValidUntil = (Get-RegistryValidUntil $Main)
     }
 }
+
+function Find-TableRow {
+    param($Table, [int]$Column = 2, [string]$MatchText)
+    for ($r = 1; $r -le $Table.Rows.Count; $r++) {
+        try {
+            $txt = $Table.Cell($r, $Column).Range.Text -replace "`r|`a", ''
+            if ($txt -like "*$MatchText*") { return $r }
+        } catch {}
+    }
+    throw "Строка не найдена: '$MatchText' (строк в таблице: $($Table.Rows.Count))"
+}
+
+function Set-Block4Cell {
+    param($Table, [string]$Text)
+    $row = Find-TableRow -Table $Table -MatchText 'Требования условиям эксплуатации'
+    $cell = $Table.Cell($row, 3)
+    $cell.Range.Text = $Text.Trim()
+    $cell.Range.HighlightColorIndex = 0
+    return $row
+}
+
+function Remove-ExtraComponentTemplateRows {
+    param($Table, $WordApp, [int]$Block4Row)
+    $lastCompRow = $Block4Row - 4
+    if ($lastCompRow -lt 13) { return }
+    for ($r = $lastCompRow; $r -ge 13; $r--) {
+        $Table.Cell($r, 4).Select() | Out-Null
+        $WordApp.Selection.Rows.Delete() | Out-Null
+    }
+}
+
+function Remove-UnusedComponentRows {
+    param($Table, $WordApp, [int]$ComponentCount)
+    if ($ComponentCount -ge 5) { return }
+    for ($r = 12; $r -gt (7 + $ComponentCount); $r--) {
+        $Table.Cell($r, 4).Select() | Out-Null
+        $WordApp.Selection.Rows.Delete() | Out-Null
+    }
+}
+
+function Add-ExtraComponentRows {
+    param($Table, $WordApp, [int]$ComponentCount)
+    $extraRows = $ComponentCount - 5
+    for ($i = 0; $i -lt $extraRows; $i++) {
+        $Table.Cell(12, 4).Select() | Out-Null
+        $WordApp.Selection.InsertRowsBelow() | Out-Null
+    }
+}
+
+function Fill-ComponentRows {
+    param($Table, $Components)
+    for ($i = 0; $i -lt $Components.Count; $i++) {
+        $row = 8 + $i
+        $c = $Components[$i]
+        $Table.Cell($row, 3).Range.Text = [string]$c.Num
+        $Table.Cell($row, 4).Range.Text = $c.Name
+        $Table.Cell($row, 5).Range.Text = $c.Spec.Trim()
+        $qty = Get-RequiredQuantity -Name $c.Name -Spec $c.Spec
+        $Table.Cell($row, 6).Range.Text = $qty
+        $Table.Cell($row, 6).Range.HighlightColorIndex = 0
+    }
+}
