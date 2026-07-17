@@ -33,7 +33,7 @@ $word.Visible = $false
 $doc = $word.Documents.Open($output)
 $t = $doc.Tables.Item(1)
 
-$block4Row = Find-TableRow -Table $t -MatchText 'Требования условиям эксплуатации'
+$block4Row = Get-Block4Row -Table $t
 
 Set-Block1Cell -Table $t -WordApp $word -Block1 $block1
 $block2Text = if ($env:GIOTTO_BLOCK2_FILE -and (Test-Path -LiteralPath $env:GIOTTO_BLOCK2_FILE)) {

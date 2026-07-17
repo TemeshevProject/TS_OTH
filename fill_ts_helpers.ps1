@@ -99,6 +99,23 @@ function New-Block1FromMainJson {
     }
 }
 
+function Get-Block4MatchText {
+    if ($env:TS_BLOCK4_MATCH) { return $env:TS_BLOCK4_MATCH }
+    # "Требования условиям эксплуатации" without Cyrillic literals in source file
+    return [string]::Concat(
+        [char]0x0422, [char]0x0440, [char]0x0435, [char]0x0431, [char]0x043E, [char]0x0432, [char]0x0430, [char]0x043D, [char]0x0438, [char]0x044F,
+        ' ',
+        [char]0x0443, [char]0x0441, [char]0x043B, [char]0x043E, [char]0x0432, [char]0x0438, [char]0x044F, [char]0x043C,
+        ' ',
+        [char]0x044D, [char]0x043A, [char]0x0441, [char]0x043F, [char]0x043B, [char]0x0443, [char]0x0430, [char]0x0442, [char]0x0430, [char]0x0446, [char]0x0438, [char]0x0438
+    )
+}
+
+function Get-Block4Row {
+    param($Table)
+    return Find-TableRow -Table $Table -MatchText (Get-Block4MatchText)
+}
+
 function Find-TableRow {
     param($Table, [int]$Column = 2, [string]$MatchText)
     for ($r = 1; $r -le $Table.Rows.Count; $r++) {
@@ -107,12 +124,12 @@ function Find-TableRow {
             if ($txt -like "*$MatchText*") { return $r }
         } catch {}
     }
-    throw "Строка не найдена: '$MatchText' (строк в таблице: $($Table.Rows.Count))"
+    throw "Row not found (table rows: $($Table.Rows.Count))"
 }
 
 function Set-Block4Cell {
     param($Table, [string]$Text)
-    $row = Find-TableRow -Table $Table -MatchText 'Требования условиям эксплуатации'
+    $row = Get-Block4Row -Table $Table
     $cell = $Table.Cell($row, 3)
     $cell.Range.Text = $Text.Trim()
     $cell.Range.HighlightColorIndex = 0

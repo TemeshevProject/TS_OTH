@@ -22,6 +22,7 @@ process.env.GIOTTO_BLOCK2_FILE = block2File;
 process.env.GIOTTO_SECTION4_FILE = path.join(folder, 'section4.txt');
 process.env.GIOTTO_TRADE_NAME =
   'Установка рентгеновская маммографическая GIOTTO IMAGE 3DL';
+process.env.TS_BLOCK4_MATCH = 'Требования условиям эксплуатации';
 
 execFileSync(
   'powershell',
