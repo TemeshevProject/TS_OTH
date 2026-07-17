@@ -12,6 +12,7 @@
     "fetch:endodry": "node fetch_endodry.js",
     "fetch:navigator": "node fetch_navigator.js",
     "build:a7-components": "node \"A7 РК-МИ-029920/build_a7_components.js\"",
-    "fill:a7": "node run_fill_a7.js"
+    "fill:a7": "node run_fill_a7.js",
+    "fill:giotto": "node run_fill_giotto.js"
   }
 }
