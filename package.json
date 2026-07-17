@@ -1,0 +1,17 @@
+{
+  "name": "ts-oth",
+  "version": "1.0.0",
+  "description": "Подготовка технических спецификаций (ТС) медицинской техники — реестр NDDA, Word",
+  "private": true,
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "fetch:a7": "node fetch_a7.js",
+    "fetch:ndda": "node fetch_ndda.js",
+    "fetch:endodry": "node fetch_endodry.js",
+    "fetch:navigator": "node fetch_navigator.js",
+    "build:a7-components": "node \"A7 РК-МИ-029920/build_a7_components.js\"",
+    "fill:a7": "node run_fill_a7.js"
+  }
+}
