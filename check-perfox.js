@@ -20,14 +20,12 @@ const checks = [
   ['Шаблон Word', fs.existsSync(resolveTemplateFile())],
 ];
 
-console.log('\n=== Проверка проекта PerfoX ===\n');
+console.log('\n=== PerfoX project check ===\n');
 let ok = true;
 for (const [name, value] of checks) {
-  const pass = value === true || (typeof value === 'string' && value);
-  const mark = pass ? 'OK' : 'НЕТ';
-  if (value === true) console.log(`[${mark}] ${name}`);
-  else if (value === false) { console.log(`[${mark}] ${name}`); ok = false; }
+  if (value === true) console.log(`[OK] ${name}`);
+  else if (value === false) { console.log(`[FAIL] ${name}`); ok = false; }
   else console.log(`[OK] ${name}: ${value}`);
 }
-console.log(ok ? '\nВсё на месте. Запускайте: build-perfox.bat\n' : '\nЕсть проблемы. Скачайте обновлённый ZIP проекта.\n');
+console.log(ok ? '\nAll OK. Run: build-perfox.bat\n' : '\nSome checks failed. Re-download ZIP.\n');
 process.exit(ok ? 0 : 1);
