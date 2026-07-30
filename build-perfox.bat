@@ -49,8 +49,7 @@ if not "!ERR!"=="0" (
 )
 
 echo.
-echo  DONE. Open folder:
-echo  PerfoX 3000B-1 РК-МИ-026055
+echo  DONE. Check output folder PerfoX 3000B-1
 echo.
 pause
 exit /b 0
