@@ -50,7 +50,7 @@ if /I "%TARGET%"=="endodry" set "SCRIPT=run_fill_endodry.js"
 if "%SCRIPT%"=="" (
   echo.
   echo   Неизвестный комплект: %TARGET%
-  echo   Доступно: giotto, a7, navigator, hyled, endodry
+  echo   Доступно: giotto, perfox, a7, navigator, hyled, endodry
   echo.
   pause
   exit /b 1
@@ -65,10 +65,19 @@ if errorlevel 1 (
   exit /b 1
 )
 
-if not exist "template\Шаблон.doc" (
+if not exist "template" (
   echo.
-  echo   Не найден шаблон: template\Шаблон.doc
-  echo   Скопируйте Шаблон.doc в папку template\
+  echo   Не найдена папка template\
+  echo.
+  pause
+  exit /b 1
+)
+
+node -e "const fs=require('fs'),p=require('path');const d=p.join(process.cwd(),'template');const ok=fs.existsSync(p.join(d,'Шаблон.doc'))||fs.readdirSync(d).some(f=>f.toLowerCase().endsWith('.doc'));process.exit(ok?0:1)" >nul 2>&1
+if errorlevel 1 (
+  echo.
+  echo   Не найден шаблон Word в папке template\
+  echo   Положите файл Шаблон.doc в template\
   echo.
   pause
   exit /b 1
