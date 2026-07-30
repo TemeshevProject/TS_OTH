@@ -12,7 +12,12 @@ function log(msg) {
 }
 
 try {
+try {
+  fs.mkdirSync(PROJECT_ROOT, { recursive: true });
   fs.writeFileSync(LOG_FILE, '', 'utf8');
+} catch (_) {
+  // ignore
+}
   log('Start PerfoX build');
   log(`Project: ${PROJECT_ROOT}`);
 
