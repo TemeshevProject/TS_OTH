@@ -32,11 +32,20 @@
 
 ### Сборка Word одним кликом (Windows)
 
-1. Попросите Cursor подготовить описания (`*_components.json`, `block2.txt` и т.д.).
-2. Дважды щёлкните **`Собрать ТС GIOTTO.bat`** (или `build-ts.bat giotto`).
-3. Готовый файл появится в папке комплекта: `ТС ….doc`.
+**Рабочий процесс:**
 
-Другие комплекты: `build-ts.bat a7`, `build-ts.bat navigator`, `build-ts.bat hyled`, `build-ts.bat endodry`.
+1. В Cursor напишите: *«Подготовь ТС для GIOTTO …»* (или другой комплект).
+2. Дождитесь, пока агент сохранит `*_components.json`, `block2.txt`, `section4.txt`.
+3. На Windows дважды щёлкните **`Собрать ТС.bat`** — откроется меню выбора комплекта.
+
+   Или сразу по ярлыку:
+   - `Собрать ТС GIOTTO.bat`
+   - `Собрать ТС A7.bat`
+   - `Собрать ТС Navigator.bat`
+
+4. Готовый файл: `ТС {название комплекта}.doc` в папке комплекта.
+
+**Требования:** Windows, Microsoft Word, Node.js, файл `template\Шаблон.doc`.
 
 ### 1. Шаблон Word
 
