@@ -12,20 +12,22 @@ echo  ===========================
 echo.
 echo  1. GIOTTO
 echo  2. PerfoX
-echo  3. A7
-echo  4. Navigator
-echo  5. HyLED
-echo  6. ENDODRY
+echo  3. OPERA
+echo  4. A7
+echo  5. Navigator
+echo  6. HyLED
+echo  7. ENDODRY
 echo  0. Exit
 echo.
-set /p CHOICE=Select 0-6: 
+set /p CHOICE=Select 0-7: 
 
 if "%CHOICE%"=="1" set TARGET=giotto& goto run
 if "%CHOICE%"=="2" set TARGET=perfox& goto run
-if "%CHOICE%"=="3" set TARGET=a7& goto run
-if "%CHOICE%"=="4" set TARGET=navigator& goto run
-if "%CHOICE%"=="5" set TARGET=hyled& goto run
-if "%CHOICE%"=="6" set TARGET=endodry& goto run
+if "%CHOICE%"=="3" set TARGET=opera& goto run
+if "%CHOICE%"=="4" set TARGET=a7& goto run
+if "%CHOICE%"=="5" set TARGET=navigator& goto run
+if "%CHOICE%"=="6" set TARGET=hyled& goto run
+if "%CHOICE%"=="7" set TARGET=endodry& goto run
 if "%CHOICE%"=="0" exit /b 0
 goto menu
 
@@ -35,6 +37,7 @@ if "%TARGET%"=="" set TARGET=%~1
 set SCRIPT=
 if /I "%TARGET%"=="giotto" set SCRIPT=run_fill_giotto.js
 if /I "%TARGET%"=="perfox" set SCRIPT=run_fill_perfox.js
+if /I "%TARGET%"=="opera" set SCRIPT=run_fill_opera.js
 if /I "%TARGET%"=="a7" set SCRIPT=run_fill_a7.js
 if /I "%TARGET%"=="navigator" set SCRIPT=run_fill_navigator.js
 if /I "%TARGET%"=="hyled" set SCRIPT=run_fill_hyled.js
@@ -55,6 +58,11 @@ if errorlevel 1 (
 
 if /I "%TARGET%"=="perfox" (
   call build-perfox.bat
+  exit /b %ERRORLEVEL%
+)
+
+if /I "%TARGET%"=="opera" (
+  call build-opera.bat
   exit /b %ERRORLEVEL%
 )
 

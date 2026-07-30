@@ -15,5 +15,7 @@
     "fill:a7": "node run_fill_a7.js",
     "fetch:perfox": "node fetch_perfox.js",
     "fill:perfox": "node run_fill_perfox.js",
+    "fetch:opera": "node fetch_opera.js",
+    "fill:opera": "node run_fill_opera.js",
   }
 }
