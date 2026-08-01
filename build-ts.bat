@@ -22,9 +22,10 @@ echo  9. ICP-Monitor
 echo  10. Panda iRes Warmer
 echo  11. Expression MR400
 echo  12. PIC iX
+echo  13. IntelliVue MX550
 echo  0. Exit
 echo.
-set /p CHOICE=Select 0-12: 
+set /p CHOICE=Select 0-13: 
 
 if "%CHOICE%"=="1" set TARGET=giotto& goto run
 if "%CHOICE%"=="2" set TARGET=perfox& goto run
@@ -38,6 +39,7 @@ if "%CHOICE%"=="9" set TARGET=icpmonitor& goto run
 if "%CHOICE%"=="10" set TARGET=pandaires& goto run
 if "%CHOICE%"=="11" set TARGET=mr400& goto run
 if "%CHOICE%"=="12" set TARGET=picix& goto run
+if "%CHOICE%"=="13" set TARGET=mx550& goto run
 if "%CHOICE%"=="0" exit /b 0
 goto menu
 
@@ -57,6 +59,7 @@ if /I "%TARGET%"=="icpmonitor" set SCRIPT=run_fill_icpmonitor.js
 if /I "%TARGET%"=="pandaires" set SCRIPT=run_fill_pandaires.js
 if /I "%TARGET%"=="mr400" set SCRIPT=run_fill_mr400.js
 if /I "%TARGET%"=="picix" set SCRIPT=run_fill_picix.js
+if /I "%TARGET%"=="mx550" set SCRIPT=run_fill_mx550.js
 
 if "%SCRIPT%"=="" (
   echo Unknown target: %TARGET%
@@ -103,6 +106,11 @@ if /I "%TARGET%"=="mr400" (
 
 if /I "%TARGET%"=="picix" (
   call build-picix.bat
+  exit /b %ERRORLEVEL%
+)
+
+if /I "%TARGET%"=="mx550" (
+  call build-mx550.bat
   exit /b %ERRORLEVEL%
 )
 
