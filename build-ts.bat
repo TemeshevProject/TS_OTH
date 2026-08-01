@@ -20,9 +20,10 @@ echo  7. ENDODRY
 echo  8. uCT 550
 echo  9. ICP-Monitor
 echo  10. Panda iRes Warmer
+echo  11. Expression MR400
 echo  0. Exit
 echo.
-set /p CHOICE=Select 0-10: 
+set /p CHOICE=Select 0-11: 
 
 if "%CHOICE%"=="1" set TARGET=giotto& goto run
 if "%CHOICE%"=="2" set TARGET=perfox& goto run
@@ -34,6 +35,7 @@ if "%CHOICE%"=="7" set TARGET=endodry& goto run
 if "%CHOICE%"=="8" set TARGET=uct550& goto run
 if "%CHOICE%"=="9" set TARGET=icpmonitor& goto run
 if "%CHOICE%"=="10" set TARGET=pandaires& goto run
+if "%CHOICE%"=="11" set TARGET=mr400& goto run
 if "%CHOICE%"=="0" exit /b 0
 goto menu
 
@@ -51,6 +53,7 @@ if /I "%TARGET%"=="endodry" set SCRIPT=run_fill_endodry.js
 if /I "%TARGET%"=="uct550" set SCRIPT=run_fill_uct550.js
 if /I "%TARGET%"=="icpmonitor" set SCRIPT=run_fill_icpmonitor.js
 if /I "%TARGET%"=="pandaires" set SCRIPT=run_fill_pandaires.js
+if /I "%TARGET%"=="mr400" set SCRIPT=run_fill_mr400.js
 
 if "%SCRIPT%"=="" (
   echo Unknown target: %TARGET%
@@ -87,6 +90,11 @@ if /I "%TARGET%"=="icpmonitor" (
 
 if /I "%TARGET%"=="pandaires" (
   call build-pandaires.bat
+  exit /b %ERRORLEVEL%
+)
+
+if /I "%TARGET%"=="mr400" (
+  call build-mr400.bat
   exit /b %ERRORLEVEL%
 )
 
