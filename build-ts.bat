@@ -19,9 +19,10 @@ echo  6. HyLED
 echo  7. ENDODRY
 echo  8. uCT 550
 echo  9. EP-6000
+echo  10. Logiq P9
 echo  0. Exit
 echo.
-set /p CHOICE=Select 0-9: 
+set /p CHOICE=Select 0-10: 
 
 if "%CHOICE%"=="1" set TARGET=giotto& goto run
 if "%CHOICE%"=="2" set TARGET=perfox& goto run
@@ -32,6 +33,7 @@ if "%CHOICE%"=="6" set TARGET=hyled& goto run
 if "%CHOICE%"=="7" set TARGET=endodry& goto run
 if "%CHOICE%"=="8" set TARGET=uct550& goto run
 if "%CHOICE%"=="9" set TARGET=ep6000& goto run
+if "%CHOICE%"=="10" set TARGET=logiqp9& goto run
 if "%CHOICE%"=="0" exit /b 0
 goto menu
 
@@ -48,6 +50,7 @@ if /I "%TARGET%"=="hyled" set SCRIPT=run_fill_hyled.js
 if /I "%TARGET%"=="endodry" set SCRIPT=run_fill_endodry.js
 if /I "%TARGET%"=="uct550" set SCRIPT=run_fill_uct550.js
 if /I "%TARGET%"=="ep6000" set SCRIPT=run_fill_ep6000.js
+if /I "%TARGET%"=="logiqp9" set SCRIPT=run_fill_logiqp9.js
 
 if "%SCRIPT%"=="" (
   echo Unknown target: %TARGET%
@@ -79,6 +82,11 @@ if /I "%TARGET%"=="uct550" (
 
 if /I "%TARGET%"=="ep6000" (
   call build-ep6000.bat
+  exit /b %ERRORLEVEL%
+)
+
+if /I "%TARGET%"=="logiqp9" (
+  call build-logiqp9.bat
   exit /b %ERRORLEVEL%
 )
 
