@@ -130,6 +130,11 @@ if /I "%TARGET%"=="macr32d" (
   exit /b %ERRORLEVEL%
 )
 
+if /I "%TARGET%"=="hyled" (
+  call build-hyled.bat
+  exit /b %ERRORLEVEL%
+)
+
 echo Close Word. Running %SCRIPT% ...
 node "%SCRIPT%"
 if errorlevel 1 pause

@@ -3,7 +3,7 @@ const path = require('path');
 const { fetchRegistryData } = require('./lib/ndda');
 const { equipmentDir, ensureDir } = require('./lib/paths');
 
-const folderName = 'HyLED C8 РК-МИ-027894';
+const folderName = 'HyLED C8 РК-МТ-027894';
 const folder = ensureDir(equipmentDir(folderName));
 const reg = 'РК МИ (МТ)-0№027894';
 
