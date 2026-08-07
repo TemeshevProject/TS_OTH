@@ -24,9 +24,10 @@ echo  11. CU-5000
 echo  12. MEDIVATORS ISA
 echo  13. EcoView 9
 echo  14. CompaX 500A
+echo  15. MAC-R32D
 echo  0. Exit
 echo.
-set /p CHOICE=Select 0-14: 
+set /p CHOICE=Select 0-15: 
 
 if "%CHOICE%"=="1" set TARGET=giotto& goto run
 if "%CHOICE%"=="2" set TARGET=perfox& goto run
@@ -42,6 +43,7 @@ if "%CHOICE%"=="11" set TARGET=cu5000& goto run
 if "%CHOICE%"=="12" set TARGET=isa& goto run
 if "%CHOICE%"=="13" set TARGET=ecoview9& goto run
 if "%CHOICE%"=="14" set TARGET=compact500a& goto run
+if "%CHOICE%"=="15" set TARGET=macr32d& goto run
 if "%CHOICE%"=="0" exit /b 0
 goto menu
 
@@ -63,6 +65,7 @@ if /I "%TARGET%"=="cu5000" set SCRIPT=run_fill_cu5000.js
 if /I "%TARGET%"=="isa" set SCRIPT=run_fill_isa.js
 if /I "%TARGET%"=="ecoview9" set SCRIPT=run_fill_ecoview9.js
 if /I "%TARGET%"=="compact500a" set SCRIPT=run_fill_compact500a.js
+if /I "%TARGET%"=="macr32d" set SCRIPT=run_fill_macr32d.js
 
 if "%SCRIPT%"=="" (
   echo Unknown target: %TARGET%
@@ -119,6 +122,11 @@ if /I "%TARGET%"=="ecoview9" (
 
 if /I "%TARGET%"=="compact500a" (
   call build-compact500a.bat
+  exit /b %ERRORLEVEL%
+)
+
+if /I "%TARGET%"=="macr32d" (
+  call build-macr32d.bat
   exit /b %ERRORLEVEL%
 )
 
