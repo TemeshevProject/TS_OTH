@@ -2,7 +2,7 @@ const path = require('path');
 const { execFileSync } = require('child_process');
 const { PROJECT_ROOT, TEMPLATE_FILE, equipmentDir, assertFiles } = require('./lib/paths');
 
-const folderName = 'CU-5000 РК-МТ-013067';
+const folderName = 'CU-5000 РК-МТ-013067 (комплект 2)';
 const folder = equipmentDir(folderName);
 const template = TEMPLATE_FILE;
 const componentsFile = path.join(folder, 'cu5000_components.json');
