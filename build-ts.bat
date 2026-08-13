@@ -21,9 +21,10 @@ echo  8. uCT 550
 echo  9. EP-6000
 echo  10. Logiq P9
 echo  11. CU-5000
+echo  12. U1
 echo  0. Exit
 echo.
-set /p CHOICE=Select 0-11: 
+set /p CHOICE=Select 0-12: 
 
 if "%CHOICE%"=="1" set TARGET=giotto& goto run
 if "%CHOICE%"=="2" set TARGET=perfox& goto run
@@ -36,6 +37,7 @@ if "%CHOICE%"=="8" set TARGET=uct550& goto run
 if "%CHOICE%"=="9" set TARGET=ep6000& goto run
 if "%CHOICE%"=="10" set TARGET=logiqp9& goto run
 if "%CHOICE%"=="11" set TARGET=cu5000& goto run
+if "%CHOICE%"=="12" set TARGET=u1& goto run
 if "%CHOICE%"=="0" exit /b 0
 goto menu
 
@@ -54,6 +56,7 @@ if /I "%TARGET%"=="uct550" set SCRIPT=run_fill_uct550.js
 if /I "%TARGET%"=="ep6000" set SCRIPT=run_fill_ep6000.js
 if /I "%TARGET%"=="logiqp9" set SCRIPT=run_fill_logiqp9.js
 if /I "%TARGET%"=="cu5000" set SCRIPT=run_fill_cu5000.js
+if /I "%TARGET%"=="u1" set SCRIPT=run_fill_u1.js
 
 if "%SCRIPT%"=="" (
   echo Unknown target: %TARGET%
@@ -95,6 +98,11 @@ if /I "%TARGET%"=="logiqp9" (
 
 if /I "%TARGET%"=="cu5000" (
   call build-cu5000.bat
+  exit /b %ERRORLEVEL%
+)
+
+if /I "%TARGET%"=="u1" (
+  call build-u1.bat
   exit /b %ERRORLEVEL%
 )
 
