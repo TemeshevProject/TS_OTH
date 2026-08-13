@@ -1,10 +1,22 @@
 const fs = require('fs');
 const path = require('path');
+const proseExtras = require('./u1_prose_extras');
 
 function spec(intro, bullets = []) {
   const text = intro.trim();
   if (!bullets.length) return text;
   return text + '\n\n' + bullets.map((b) => '- ' + b).join('\n');
+}
+
+function applyProseExtras(components) {
+  return components.map((c) => {
+    const extra = proseExtras[c.Num];
+    if (!extra) return c;
+    const parts = c.Spec.split('\n\n');
+    const extras = Array.isArray(extra) ? extra : [extra];
+    parts[0] = [parts[0].trim(), ...extras].join(' ');
+    return { ...c, Spec: parts.join('\n\n') };
+  });
 }
 
 const components = [
@@ -77,7 +89,8 @@ const components = [
     Num: '9',
     Name: '55 Мобильная тележка',
     Spec: spec(
-      'Мобильная тележка предназначена для размещения и транспортировки 55-дюймового монитора в эндоскопическом блоке и операционной. Обеспечивает устойчивую фиксацию монитора на рабочей высоте и перемещение между рабочими зонами. Используется для организации рабочего места эндоскопической бригады.'
+      'Мобильная тележка предназначена для размещения и транспортировки 55-дюймового монитора в эндоскопическом блоке и операционной. Обеспечивает устойчивую фиксацию монитора на рабочей высоте и перемещение между рабочими зонами. Используется для организации рабочего места эндоскопической бригады.',
+      ['Диагональ монитора: 55 дюймов']
     ),
   },
   {
@@ -457,6 +470,8 @@ if (components.length !== 56) {
   throw new Error(`Expected 56 components, got ${components.length}`);
 }
 
+const finalComponents = applyProseExtras(components);
+
 const outPath = path.join(__dirname, 'u1_components.json');
-fs.writeFileSync(outPath, JSON.stringify(components, null, 2), 'utf8');
-console.log('Written', components.length, 'components to', outPath);
+fs.writeFileSync(outPath, JSON.stringify(finalComponents, null, 2), 'utf8');
+console.log('Written', finalComponents.length, 'components to', outPath);
