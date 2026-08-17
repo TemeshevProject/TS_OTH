@@ -16,7 +16,12 @@ $main = Get-Content (Join-Path $folder 'faclyric_main.json') -Raw -Encoding UTF8
 $block1 = @{
     TradeName = $env:FACLYRIC_TRADE_NAME
     ProducerName = 'Becton, Dickinson and Company, BD Biosciences'
-    CountryName = 'Соедин' + [char]0x0451 + 'нные Штаты Америки'
+    CountryName = (
+        [char]0x0421 + [char]0x043E + [char]0x0435 + [char]0x0434 + [char]0x0438 + [char]0x043D + [char]0x0451 +
+        [char]0x043D + [char]0x043D + [char]0x044B + [char]0x0435 + [char]0x0020 +
+        [char]0x0428 + [char]0x0442 + [char]0x0430 + [char]0x0442 + [char]0x044B + [char]0x0020 +
+        [char]0x0410 + [char]0x043C + [char]0x0435 + [char]0x0440 + [char]0x0438 + [char]0x043A + [char]0x0438
+    )
     RegNumber = $main.regNumber
     RegDate = $main.regDate
     ValidUntil = (Get-RegistryValidUntil $main)
