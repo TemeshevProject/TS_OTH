@@ -23,9 +23,10 @@ echo  10. EXTRON 5
 echo  11. uCT 550 (komplekt 2)
 echo  12. CASP-50
 echo  13. CASP-50 (komplekt 2)
+echo  14. Avanttron Pro
 echo  0. Exit
 echo.
-set /p CHOICE=Select 0-13: 
+set /p CHOICE=Select 0-14: 
 
 if "%CHOICE%"=="1" set TARGET=giotto& goto run
 if "%CHOICE%"=="2" set TARGET=perfox& goto run
@@ -40,6 +41,7 @@ if "%CHOICE%"=="10" set TARGET=extron5& goto run
 if "%CHOICE%"=="11" set TARGET=uct550kit2& goto run
 if "%CHOICE%"=="12" set TARGET=casp50& goto run
 if "%CHOICE%"=="13" set TARGET=casp50kit2& goto run
+if "%CHOICE%"=="14" set TARGET=avanttron& goto run
 if "%CHOICE%"=="0" exit /b 0
 goto menu
 
@@ -60,6 +62,7 @@ if /I "%TARGET%"=="extron5" set SCRIPT=run_fill_extron5.js
 if /I "%TARGET%"=="uct550kit2" set SCRIPT=run_fill_uct550_kit2.js
 if /I "%TARGET%"=="casp50" set SCRIPT=run_fill_casp50.js
 if /I "%TARGET%"=="casp50kit2" set SCRIPT=run_fill_casp50_kit2.js
+if /I "%TARGET%"=="avanttron" set SCRIPT=run_fill_avanttron.js
 
 if "%SCRIPT%"=="" (
   echo Unknown target: %TARGET%
@@ -111,6 +114,11 @@ if /I "%TARGET%"=="casp50" (
 
 if /I "%TARGET%"=="casp50kit2" (
   call build-casp50-kit2.bat
+  exit /b %ERRORLEVEL%
+)
+
+if /I "%TARGET%"=="avanttron" (
+  call build-avanttron.bat
   exit /b %ERRORLEVEL%
 )
 
