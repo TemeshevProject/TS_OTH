@@ -25,9 +25,10 @@ echo  12. CASP-50
 echo  13. CASP-50 (komplekt 2)
 echo  14. Avanttron Pro
 echo  15. Magnitoturbotron Pro
+echo  16. R-GAIT
 echo  0. Exit
 echo.
-set /p CHOICE=Select 0-15: 
+set /p CHOICE=Select 0-16: 
 
 if "%CHOICE%"=="1" set TARGET=giotto& goto run
 if "%CHOICE%"=="2" set TARGET=perfox& goto run
@@ -44,6 +45,7 @@ if "%CHOICE%"=="12" set TARGET=casp50& goto run
 if "%CHOICE%"=="13" set TARGET=casp50kit2& goto run
 if "%CHOICE%"=="14" set TARGET=avanttron& goto run
 if "%CHOICE%"=="15" set TARGET=magnitoturbotron& goto run
+if "%CHOICE%"=="16" set TARGET=rgait& goto run
 if "%CHOICE%"=="0" exit /b 0
 goto menu
 
@@ -66,6 +68,7 @@ if /I "%TARGET%"=="casp50" set SCRIPT=run_fill_casp50.js
 if /I "%TARGET%"=="casp50kit2" set SCRIPT=run_fill_casp50_kit2.js
 if /I "%TARGET%"=="avanttron" set SCRIPT=run_fill_avanttron.js
 if /I "%TARGET%"=="magnitoturbotron" set SCRIPT=run_fill_magnitoturbotron.js
+if /I "%TARGET%"=="rgait" set SCRIPT=run_fill_rgait.js
 
 if "%SCRIPT%"=="" (
   echo Unknown target: %TARGET%
@@ -127,6 +130,11 @@ if /I "%TARGET%"=="avanttron" (
 
 if /I "%TARGET%"=="magnitoturbotron" (
   call build-magnitoturbotron.bat
+  exit /b %ERRORLEVEL%
+)
+
+if /I "%TARGET%"=="rgait" (
+  call build-rgait.bat
   exit /b %ERRORLEVEL%
 )
 
