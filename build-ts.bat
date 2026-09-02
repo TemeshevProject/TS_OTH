@@ -27,9 +27,10 @@ echo  14. Avanttron Pro
 echo  15. Magnitoturbotron Pro
 echo  16. R-GAIT
 echo  17. NeuroHelper
+echo  18. EP-6000
 echo  0. Exit
 echo.
-set /p CHOICE=Select 0-17: 
+set /p CHOICE=Select 0-18: 
 
 if "%CHOICE%"=="1" set TARGET=giotto& goto run
 if "%CHOICE%"=="2" set TARGET=perfox& goto run
@@ -48,6 +49,7 @@ if "%CHOICE%"=="14" set TARGET=avanttron& goto run
 if "%CHOICE%"=="15" set TARGET=magnitoturbotron& goto run
 if "%CHOICE%"=="16" set TARGET=rgait& goto run
 if "%CHOICE%"=="17" set TARGET=neurohelper& goto run
+if "%CHOICE%"=="18" set TARGET=ep6000& goto run
 if "%CHOICE%"=="0" exit /b 0
 goto menu
 
@@ -72,6 +74,7 @@ if /I "%TARGET%"=="avanttron" set SCRIPT=run_fill_avanttron.js
 if /I "%TARGET%"=="magnitoturbotron" set SCRIPT=run_fill_magnitoturbotron.js
 if /I "%TARGET%"=="rgait" set SCRIPT=run_fill_rgait.js
 if /I "%TARGET%"=="neurohelper" set SCRIPT=run_fill_neurohelper.js
+if /I "%TARGET%"=="ep6000" set SCRIPT=run_fill_ep6000.js
 
 if "%SCRIPT%"=="" (
   echo Unknown target: %TARGET%
@@ -143,6 +146,11 @@ if /I "%TARGET%"=="rgait" (
 
 if /I "%TARGET%"=="neurohelper" (
   call build-neurohelper.bat
+  exit /b %ERRORLEVEL%
+)
+
+if /I "%TARGET%"=="ep6000" (
+  call build-ep6000.bat
   exit /b %ERRORLEVEL%
 )
 
