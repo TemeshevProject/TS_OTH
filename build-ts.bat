@@ -29,9 +29,10 @@ echo  16. R-GAIT
 echo  17. NeuroHelper
 echo  18. EP-6000
 echo  19. uCT 550 (komplekt 3)
+echo  20. MAC-R32D
 echo  0. Exit
 echo.
-set /p CHOICE=Select 0-19: 
+set /p CHOICE=Select 0-20: 
 
 if "%CHOICE%"=="1" set TARGET=giotto& goto run
 if "%CHOICE%"=="2" set TARGET=perfox& goto run
@@ -52,6 +53,7 @@ if "%CHOICE%"=="16" set TARGET=rgait& goto run
 if "%CHOICE%"=="17" set TARGET=neurohelper& goto run
 if "%CHOICE%"=="18" set TARGET=ep6000& goto run
 if "%CHOICE%"=="19" set TARGET=uct550kit3& goto run
+if "%CHOICE%"=="20" set TARGET=macr32d& goto run
 if "%CHOICE%"=="0" exit /b 0
 goto menu
 
@@ -78,6 +80,7 @@ if /I "%TARGET%"=="rgait" set SCRIPT=run_fill_rgait.js
 if /I "%TARGET%"=="neurohelper" set SCRIPT=run_fill_neurohelper.js
 if /I "%TARGET%"=="ep6000" set SCRIPT=run_fill_ep6000.js
 if /I "%TARGET%"=="uct550kit3" set SCRIPT=run_fill_uct550_kit3.js
+if /I "%TARGET%"=="macr32d" set SCRIPT=run_fill_macr32d.js
 
 if "%SCRIPT%"=="" (
   echo Unknown target: %TARGET%
@@ -159,6 +162,11 @@ if /I "%TARGET%"=="ep6000" (
 
 if /I "%TARGET%"=="uct550kit3" (
   call build-uct550-kit3.bat
+  exit /b %ERRORLEVEL%
+)
+
+if /I "%TARGET%"=="macr32d" (
+  call build-macr32d.bat
   exit /b %ERRORLEVEL%
 )
 
