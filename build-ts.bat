@@ -31,9 +31,10 @@ echo  18. EP-6000
 echo  19. uCT 550 (komplekt 3)
 echo  20. MAC-R32D
 echo  21. BD FACSLyric (komplekt 2)
+echo  22. corpuls3
 echo  0. Exit
 echo.
-set /p CHOICE=Select 0-21: 
+set /p CHOICE=Select 0-22: 
 
 if "%CHOICE%"=="1" set TARGET=giotto& goto run
 if "%CHOICE%"=="2" set TARGET=perfox& goto run
@@ -56,6 +57,7 @@ if "%CHOICE%"=="18" set TARGET=ep6000& goto run
 if "%CHOICE%"=="19" set TARGET=uct550kit3& goto run
 if "%CHOICE%"=="20" set TARGET=macr32d& goto run
 if "%CHOICE%"=="21" set TARGET=faclyrickit2& goto run
+if "%CHOICE%"=="22" set TARGET=corpuls3& goto run
 if "%CHOICE%"=="0" exit /b 0
 goto menu
 
@@ -84,6 +86,7 @@ if /I "%TARGET%"=="ep6000" set SCRIPT=run_fill_ep6000.js
 if /I "%TARGET%"=="uct550kit3" set SCRIPT=run_fill_uct550_kit3.js
 if /I "%TARGET%"=="macr32d" set SCRIPT=run_fill_macr32d.js
 if /I "%TARGET%"=="faclyrickit2" set SCRIPT=run_fill_faclyric_kit2.js
+if /I "%TARGET%"=="corpuls3" set SCRIPT=run_fill_corpuls3.js
 
 if "%SCRIPT%"=="" (
   echo Unknown target: %TARGET%
@@ -175,6 +178,11 @@ if /I "%TARGET%"=="macr32d" (
 
 if /I "%TARGET%"=="faclyrickit2" (
   call build-faclyric-kit2.bat
+  exit /b %ERRORLEVEL%
+)
+
+if /I "%TARGET%"=="corpuls3" (
+  call build-corpuls3.bat
   exit /b %ERRORLEVEL%
 )
 
